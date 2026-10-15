@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf对象使用')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf对象使用</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#wbgjh">1、文本国际化获取</a>
+                                    </h4>
+                                </div>
+                                <div id="wbgjh" class="panel-collapse collapse in">
+                                    <div class="panel-body" th:with="num=5">
+                                        <p class="text-left">1、普通获取方式：[[#{user.password.not.match}]]</p>
+                                        <p class="text-left">2、传入索引方式：[[#{user.password.retry.limit.exceed(${num})}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#dqbl">2、获取变量方式</a>
+                                    </h4>
+                                </div>
+                                <div id="dqbl" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	<p class="text-left">1、获取对象中的userName属性：[[${user.userName}]]</p>
+                                        <p class="text-left">2、获取集合中的元素：[[${users[0].userName}]]</p>
+                                        <p class="text-left">3、获取Map中的元素：[[${userMap['user2'].userName}]]</p>
+                                        <p class="text-left">4、获取数组中的元素：[[${userArr[0].userName}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#clzywb">3、处理转义文本</a>
+                                    </h4>
+                                </div>
+                                <div id="clzywb" class="panel-collapse collapse">
+                                    <div class="panel-body" th:with="html='<h3>若依框架</h3>'">
+                                    	 1、转义字符输出
+                                        <p class="text-left" th:text="${html}"></p>
+                                         2、无需字符转义
+                                        <p class="text-left" th:utext="${html}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#ljbds">4、链接表达式</a>
+                                        </h4>
+                                </div>
+                                <div id="ljbds" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p class="text-left">
+                                        	<a th:href="@{/user/details(userId=${user.userId})}">设置单个URL参数</a>
+                                        </p>
+                                        <p class="text-left">
+                                        	<a th:href="@{/user/details(userId=${user.userId},name=${user.userName})}">设置多个URL参数</a>
+                                        </p>
+                                         <p class="text-left">
+                                        	<a th:href="@{/user/{userId}/details(userId=${user.userId})}">设置rest风格参数</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#szdx">5、数字对象</a>
+                                    </h4>
+                                </div>
+                                <div id="szdx" class="panel-collapse collapse">
+                                    <div class="panel-body" th:with="num=1000">
+                                        <p class="text-left">Thymeleaf主要使用org.thymeleaf.expression.Numbers这个类来处理数字，在模板中使用"#numbers"来表示这个对象。</p>
+                                        1、整数格式化
+                                        <p class="text-left">[[${#numbers.formatInteger(num,5)}]]</p>
+                                        <p class="text-left" th:each="arrNum : ${#numbers.arrayFormatInteger(arr,5)}">
+                                        	[[${arrNum}]]
+                                        </p>
+                                        <p class="text-left">[[${#numbers.listFormatInteger(list,5)}]]</p>
+                                        <p class="text-left">[[${#numbers.setFormatInteger(set,5)}]]</p>
+                                        
+                                        2、小数格式化
+                                        <p class="text-left">[[${#numbers.formatDecimal(10.992, 3, 2)}]]</p>
+                                        <p class="text-left" th:each="arrNum : ${#numbers.arrayFormatDecimal(arr, 3, 2)}">
+                                        	[[${arrNum}]]
+                                        </p>
+                                        <p class="text-left">[[${#numbers.listFormatDecimal(list, 3, 2)}]]</p>
+                                        <p class="text-left">[[${#numbers.setFormatDecimal(set, 3, 2)}]]</p>
+                                        
+                                        3、标识千位分隔符
+                                        <p class="text-left">POINT使用"."作为分隔符：[[${#numbers.formatInteger(num,5,'POINT')}]]</p>
+                                        <p class="text-left">COMMA使用","作为分隔符：[[${#numbers.formatInteger(num,5,'COMMA')}]]</p>
+                                        <p class="text-left">WHITESPACE使用" "作为分隔符：[[${#numbers.formatInteger(num,5,'WHITESPACE')}]]</p>
+                                        
+                                        4、货币格式化
+                                        <p class="text-left">[[${#numbers.formatCurrency(10.99)}]]</p>
+                                        <p class="text-left">arrayFormatCurrency、listFormatCurrency、setFormatCurrency和上面一样，就不演示了</p>
+                                        
+                                        5、百分比格式化
+                                        <p class="text-left">[[${#numbers.formatPercent(0.23456, 2, 3)}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#zfcdx">6、字符串对象</a>
+                                    </h4>
+                                </div>
+                                <div id="zfcdx" class="panel-collapse collapse">
+                                    <div class="panel-body" th:with="html='<h3>若依框架</h3>'">
+                                        <p class="text-left">Thymeleaf主要使用org.thymeleaf.expression.Strings这个类来处理数字，在模板中使用"#strings"来表示这个对象。</p>
+                                        1、toString与length方法
+                                        <p class="text-left">toString方法：[[${#strings.toString(user)}]]</p>
+                                        <p class="text-left">length方法：[[${#strings.length(user)}]]</p>
+                                        2、非空判断与默认值处理
+                                        <p class="text-left">isEmpty方法：[[${#strings.isEmpty(user.userName)}]]</p>
+                                        <p class="text-left">defaultString方法：[[${#strings.defaultString(user.sex, '无性别')}]]</p>
+                                        3、包含判断
+                                        <p class="text-left">contains方法：[[${#strings.contains(user.userName, '张三')}]]</p>
+                                        <p class="text-left">containsIgnoreCase方法：[[${#strings.containsIgnoreCase(user.userName, '张三')}]]</p>
+                                        <p class="text-left">startsWith方法：[[${#strings.startsWith(user.userName, '张')}]]</p>
+                                        <p class="text-left">endsWith方法：[[${#strings.endsWith(user.userName, '三')}]]</p>
+                                        4、截取与替换
+                                        <p class="text-left">indexOf方法：[[${#strings.indexOf('abcde', 'z')}]]</p>
+                                        <p class="text-left">substring方法：[[${#strings.substring('abcde', 1, 3)}]]</p>
+                                        <p class="text-left">substringAfter方法：[[${#strings.substringAfter('abcde', 'a')}]]</p>
+                                        <p class="text-left">substringBefore方法：[[${#strings.substringBefore('abcde', 'c')}]]</p>
+                                        <p class="text-left">replace方法：[[${#strings.replace('abcde', 'c', '1')}]]</p>
+                                        5、追加与拼接
+                                        <p class="text-left">prepend方法：[[${#strings.prepend(3, 'e')}]]</p>
+                                        <p class="text-left">append方法：[[${#strings.append('abcd', 'e')}]]</p>
+                                        <p class="text-left">concat方法：[[${#strings.concat('abcd', 'e', 'b')}]]</p>
+                                        <p class="text-left">concatReplaceNulls方法：[[${#strings.concatReplaceNulls('**', '123', null, 'abc')}]]</p>
+                                    	6、分割与连接
+                                    	<p class="text-left" th:each="array : ${#strings.arraySplit('a-b-c', '-')}">
+                                        	arraySplit方法：[[${array}]]
+                                        </p>
+                                        <p class="text-left">listSplit方法：[[${#strings.arrayJoin(new String[]{'a','b','c'}, '-')}]]</p>
+                                        <p class="text-left">listSplit、setSplit、listJoin、setJoin和上面一样，就不演示了</p>
+                                    	7、大小写转换
+                                    	<p class="text-left">toUpperCase：[[${#strings.toUpperCase('spring boot')}]]</p>
+                                        <p class="text-left">toLowerCase：[[${#strings.toLowerCase('Spring Boot')}]]</p>
+                                        <p class="text-left">capitalize：[[${#strings.capitalize('spring boot')}]]</p>
+                                        <p class="text-left">unCapitalize：[[${#strings.unCapitalize('Spring boot')}]]</p>
+                                        <p class="text-left">capitalizeWords：[[${#strings.capitalizeWords('spring boot')}]]</p>
+                                        <p class="text-left">capitalizeWords：[[${#strings.capitalizeWords('spring-boot', '-')}]]</p>
+                                        8、其他处理
+                                        <p class="text-left">trim：[[${#strings.trim(' spring boot ')}]]</p>
+                                        <p class="text-left">abbreviate：[[${#strings.abbreviate('SpringBooot', 9)}]]</p>
+                                        <p class="text-left">randomAlphanumeric：[[${#strings.randomAlphanumeric(5)}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#rqdx">7、日期对象</a>
+                                    </h4>
+                                </div>
+                                <div id="rqdx" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        Thymeleaf主要使用org.thymeleaf.expression.Dates 这个类来处理日期，在模板中使用"#dates"来表示这个对象。
+                                    	1、格式化日期
+                                        <p class="text-left">[[${#dates.format(date)}]]</p>
+                                        <p class="text-left">[[${#dates.formatISO(date)}]]</p>
+                                        <p class="text-left">[[${#dates.format(date, 'yyyy-MM-dd HH:mm:ss')}]]</p>
+                                        2、获取日期字段
+                                        <p class="text-left">获取当前的年份：[[${#dates.year(date)}]]</p>
+                                        <p class="text-left">获取当前的月份：[[${#dates.month(date)}]]</p>
+                                        <p class="text-left">获取当月的天数：[[${#dates.day(date)}]]</p>
+                                        <p class="text-left">获取当前的小时：[[${#dates.hour(date)}]]</p>
+                                        <p class="text-left">获取当前的分钟：[[${#dates.minute(date)}]]</p>
+                                        <p class="text-left">获取当前的秒数：[[${#dates.second(date)}]]</p>
+                                        <p class="text-left">获取当前的毫秒：[[${#dates.millisecond(date)}]]</p>
+                                        <p class="text-left">获取当前的月份名称：[[${#dates.monthName(date)}]]</p>
+                                        <p class="text-left">获取当前是星期几：[[${#dates.dayOfWeek(date)-1}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#szyjhdx">8、数组与集合对象</a>
+                                    </h4>
+                                </div>
+                                <div id="szyjhdx" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        Thymeleaf主要使用
+                                        <p class="text-left">org.thymeleaf.expression.Arrays</p>
+                                        <p class="text-left">org.thymeleaf.expression.Lists</p>
+                                        <p class="text-left">org.thymeleaf.expression.Maps</p>
+                                        <p class="text-left">org.thymeleaf.expression.Sets</p>
+                                                                                                           处理数组与集合对象
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

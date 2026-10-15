@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf自定义标签')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf自定义标签</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#html">1、html方式调用后台</a>
+                                    </h4>
+                                </div>
+                                <div id="html" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+							            1、html方式调用后台：
+	                                    <p class="text-left">
+		                                    <div class="panel-body">
+								                                        用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+															<option value="">所有</option>
+															<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+														</select>
+		                                    </div>
+	                                    </p>
+	                                    
+	                                    2、自定义标签dict:select方式调用后台
+                                       <p class="text-left">
+                                           <div class="panel-body">
+								                                        用户状态：<dict:select id="status" name="status" dict="sys_normal_disable" headerKey="*" headerValue="所有"></dict:select>
+                                    	   </div>
+                                       </p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

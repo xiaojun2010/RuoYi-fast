@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf内联语法')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf内联语法</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#synlyfxswb">1、使用内联语法显示文本</a>
+                                    </h4>
+                                </div>
+                                <div id="synlyfxswb" class="panel-collapse collapse in">
+                                    <div class="panel-body" th:with="html='<h3>若依框架</h3>'">
+                                        1、text标签显示
+                                        <p class="text-left"><div th:text="${html}"></div></p>
+                                        2、内联显示
+                                        <p class="text-left"><div>[[${html}]]</div></p>
+                                        3、utext标签显示
+                                        <p class="text-left"><div th:utext="${html}"></div></p>
+                                        4、内联显示
+                                        <p class="text-left"><div>[(${html})]</div></p>
+                                        5、关闭内联语法
+                                        <p class="text-left"><div th:inline="none">[[${html}]]</div></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#javascript">2、在javascript中使用内联语法</a>
+                                    </h4>
+                                </div>
+                                <div id="javascript" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	<script th:inline="javascript">
+                                    		var userName = [[${user.userName}]]
+                                    		// alert(userName);
+                                    	</script>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#css">2、在css中使用内联语法</a>
+                                    </h4>
+                                </div>
+                                <div id="css" class="panel-collapse collapse">
+                                    <div class="panel-body" th:with="color='red'">
+                                    	<style th:inline="css">
+                                    		.my-text{
+                                    			color: [[${color}]]
+                                    		}
+                                    	</style>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#zhushi">4、内联语法注释</a>
+                                    </h4>
+                                </div>
+                                <div id="zhushi" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	<script th:inline="javascript">
+	                                    	<!-- test1
+	                                		function test1{
+	                                			
+	                                		}
+	                                		!-->
+                                		
+                                    		/*[+  test2
+                                    		function test2{
+                                    			
+                                    		}
+                                    		+]*/
+                                    		
+                                    		/*[- test3 */   
+                                    		function test3{
+                                    			
+                                    		}
+                                    		/* -]*/
+                                    	</script>
+                                    	
+                                    	<style th:inline="css">
+                                    		<!-- test1
+	                                		.test1{
+                                    			color: [[${color}]]
+                                    		}
+	                                		!-->
+                                		
+                                    		/*[+  test2
+                                    		.test2{
+                                    			color: [[${color}]]
+                                    		}
+                                    		+]*/
+                                    		
+                                    		/*[- test3 */   
+                                    		.test3{
+                                    			color: [[${color}]]
+                                    		}
+                                    		/* -]*/
+                                    	</style>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#xuliehua">5、内联语法序列化</a>
+                                    </h4>
+                                </div>
+                                <div id="xuliehua" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                    	<script th:inline="javascript">
+                                    	    // javabean
+                                    		var user = {"id":1,"name":"张三"};
+                                    		//alert(user.name);
+                                    		// list
+                                    		var users = [{"id":1,"name":"张三"},{"id":2,"name":"李四"}];
+                                    		//alert(users.length);
+                                    		// map
+                                    		var map = {"user1":{"id":1,"name":"张三"},"user2":{"id":1,"name":"李四"}};
+                                    		//alert(map.user1.name);
+                                    	</script>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

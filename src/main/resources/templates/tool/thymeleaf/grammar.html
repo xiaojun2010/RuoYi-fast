@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf常用语法')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf常用语法</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#bdsyfzysf">1、表达式语法之运算符</a>
+                                    </h4>
+                                </div>
+                                <div id="bdsyfzysf" class="panel-collapse collapse" th:with="year=2019">
+                                    <div class="panel-body" th:with="result=true">
+                                        <p class="text-danger">表达式常量</p>
+                                        <ul>
+				                            <li>
+				                                <p><strong>字符串常量</strong> - <span th:text="'hello , word'"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>数字常量</strong> - <span th:text="2019 + 2"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>布尔值常量</strong> - <span th:text="${result}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>空值常量</strong> - <span th:text="${result == null}"></span></p>
+				                            </li>
+				                        </ul>
+				                        <p class="text-danger">字符串拼接</p>
+                                        <ul>
+				                            <li>
+				                                <p><strong>方法一</strong> - <span th:text="${#strings.append('abc', 'd')}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法二</strong> - <span th:text="${#strings.concat('abc', 'd')}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法三</strong> - <span th:text="${'abc' + 'd'}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法四</strong> - <span th:text="'abc' + 'd'"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法五</strong> - <span th:text="abc + d"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法六</strong> - <span th:text="|abc| + |d|"></span></p>
+				                            </li>
+				                        </ul>
+				                        <p class="text-danger">算数运算符</p>
+                                        <ul>
+				                            <li>
+				                                <p><strong>3 + 2 = </strong> <span th:text="${3 + 2}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>5 - 2 = </strong> <span th:text="${5 - 2}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>5 * 2 =</strong> <span th:text="${5* 2}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>5 / 2 =</strong> <span th:text="5.0 / 2"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>5 % 2 =</strong> <span th:text="5 % 2"></span></p>
+				                            </li>
+				                        </ul>
+				                        <p class="text-danger">关系运算符</p>
+                                        <ul>
+				                            <li>
+				                                <p><strong>1 > 1 = </strong> <span th:text="${1 gt 1}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>1 < 1 = </strong> <span th:text="${1 lt 1}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>1 >= 1 = </strong> <span th:text="${1 ge 1}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>1 <= 1 = </strong> <span th:text="${1 le 1}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>1 == 1 = </strong> <span th:text="${1 eq 1}"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>1 != 1 = </strong> <span th:text="${1 ne 1}"></span></p>
+				                            </li>
+				                        </ul>
+				                        <p class="text-danger">三目运算符</p>
+                                        <ul th:with="value=ruoyi">
+				                            <li>
+				                                <p><strong>方法一</strong> <span th:text="${1 != 1} ? |条件成立| : |条件不成立|"></span></p>
+				                            </li>
+				                            <li>
+				                                <p><strong>方法二</strong> <span th:text="${value == 'ruoyi'} ? ${value} : |默认值|"></span></p>
+				                            </li>
+				                             <li>
+				                                <p><strong>方法三（不成立返回空）</strong> <span th:text="${1 != 1} ? |条件成立|"></span></p>
+				                            </li>
+				                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#sxsz">2、属性设置</a>
+                                    </h4>
+                                </div>
+                                <div id="sxsz" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p class="text-left">1、单个属性值设置：<input type="submit" value="提交" th:attr="value=#{user.login.success}"></input></p>
+                                        <p class="text-left">2、多个属性值设置：<input type="submit" value="提交" th:attr="value=#{user.login.success},class='btn btn-primary'"></input></p>
+                                    	<p class="text-left">3、设置单个HTML节点属性：<input type="submit" value="提交" th:value="#{user.login.success}"></input></p>
+                                        <p class="text-left">4、设置多个HTML节点属性：<input type="submit" value="提交" th:value="#{user.login.success}" th:class="'btn btn-primary'"></input></p>
+                                        <p class="text-left">5、属性值后面拼接：<div id="imgDiv" th:attrappend="id='-dataId'"></div></p>
+                                        <p class="text-left">6、属性值前面拼接：<div id="imgDiv" th:attrprepend="id='dataId-'"></div></p>
+                                        <p class="text-left">7、属性添加style样式：<div style="text-align: left;" th:styleappend="'color:red'">style样式</div></p>
+                                        <p class="text-left">8、属性添加class样式：<div class="btn btn-primary btn-xs" th:classappend="'btn-rounded'">class样式</div></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#tjpd">3、条件判断</a>
+                                    </h4>
+                                </div>
+                                <div id="tjpd" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p class="text-danger">条件判断</p>
+                                        <ul th:with="value=ruoyi">
+				                            <li>
+				                                <p><strong>方法一</strong> - <span th:if="0">数字类型，如果为0，不显示</span></p>
+				                                <p><strong>方法二</strong> - <span th:if="false">false、off、no 不显示</span></p>
+				                                <select th:with="sex=1" th:switch="${sex}">
+				                                	<option th:case="0">男</option>
+				                                	<option th:case="1">女</option>
+				                                </select>
+				                            </li>
+				                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#sjdd">4、数据迭代</a>
+                                    </h4>
+                                </div>
+                                <div id="sjdd" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p class="text-danger">list数据迭代</p>
+                                        <table>
+                                        	<tr th:each="user : ${users}">
+                                        		<td th:text="${user.userName}"></td>
+                                        	</tr>
+                                        </table>
+                                        <p class="text-danger">map数据迭代</p>
+                                        <table>
+                                        	<tr th:each="map : ${userMap}">
+                                        	    <td th:text="${map.key}"></td>
+                                        		<td th:text="${map.value.userName}"></td>
+                                        	</tr>
+                                        </table>
+                                        <p class="text-danger">数据状态对象（自定义状态对象）</p>
+                                        <table class="table">
+										    <thead>
+										    <tr>
+										        <th>用户名</th>
+										        <th>从0开始的索引</th>
+										        <th>从1开始的索引</th>
+										        <th>数据集合大小</th>
+										        <th>是否第一次迭代</th>
+										        <th>是否最后一次迭代</th>
+										        <th>是否偶数次迭代</th>
+										        <th>是否奇数次迭代</th>
+										    </tr>
+										    </thead>
+										    <tbody>
+										    <tr th:each="user,state : ${users}">
+										        <td th:text="${user.userName}"></td>
+										        <td th:text="${state.index}"></td>
+										        <td th:text="${state.count}"></td>
+										        <td th:text="${state.size}"></td>
+										        <td th:text="${state.first}"></td>
+										        <td th:text="${state.last}"></td>
+										        <td th:text="${state.even}"></td>
+										        <td th:text="${state.odd}"></td>
+										    </tr>
+										    </tbody>
+										</table>
+										<p class="text-danger">数据状态对象（默认规则 节点变量名+Stat）</p>
+                                        <table class="table">
+										    <thead>
+										    <tr>
+										        <th>用户名</th>
+										        <th>从0开始的索引</th>
+										        <th>从1开始的索引</th>
+										        <th>数据集合大小</th>
+										        <th>是否第一次迭代</th>
+										        <th>是否最后一次迭代</th>
+										        <th>是否偶数次迭代</th>
+										        <th>是否奇数次迭代</th>
+										    </tr>
+										    </thead>
+										    <tbody>
+										    <tr th:each="user : ${users}">
+										        <td th:text="${user.userName}"></td>
+										        <td th:text="${userStat.index}"></td>
+										        <td th:text="${userStat.count}"></td>
+										        <td th:text="${userStat.size}"></td>
+										        <td th:text="${userStat.first}"></td>
+										        <td th:text="${userStat.last}"></td>
+										        <td th:text="${userStat.even}"></td>
+										        <td th:text="${userStat.odd}"></td>
+										    </tr>
+										    </tbody>
+										</table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#xhbds">5、星号表达式</a>
+                                    </h4>
+                                </div>
+                                <div id="xhbds" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p class="text-danger">星号表达式</p>
+                                        <table class="table">
+										    <thead>
+										    <tr>
+										        <th>用户ID</th>
+										        <th>用户名</th>
+										    </tr>
+										    </thead>
+										    <tbody>
+										    <tr th:each="user : ${users}" th:object="${user}">
+										        <td th:text="*{userId}"></td>
+										        <td th:text="*{userName}"></td>
+										    </tr>
+										    </tbody>
+										</table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

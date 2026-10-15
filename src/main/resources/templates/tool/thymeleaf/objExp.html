@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf自定义内置对象')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf自定义内置对象</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="tabs_panels.html#html">1、html方式调用后台</a>
+                                    </h4>
+                                </div>
+                                <div id="html" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+	                                    1、自定义内置对象dateUtils方式调用后台
+                                       <p class="text-left">
+                                           <div class="panel-body">
+								              <p class="text-left"> 
+								              	<span th:text="${#dateUtils.getDate()}"></span>
+								              </p>
+								              <p class="text-left"> 
+								              	<span th:text="${#dateUtils.dateTimeNow('yyyy-MM-dd HH:mm:ss')}"></span>
+								              </p>
+                                    	   </div>
+                                       </p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

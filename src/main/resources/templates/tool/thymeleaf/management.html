@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf调用后台')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf调用后台</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#html">1、html方式调用后台</a>
+                                    </h4>
+                                </div>
+                                <div id="html" class="panel-collapse collapse in">
+                                    1、html方式调用后台：
+                                    <p class="text-left">
+	                                    <div class="panel-body">
+							                                        用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+														<option value="">所有</option>
+														<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+													</select>
+	                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#javsscript">2、javsscript方式调用后台</a>
+                                    </h4>
+                                </div>
+                                <div id="javsscript" class="panel-collapse collapse">
+                                	1、javsscript方式调用后台
+                                    <p class="text-left">
+	                                    <script th:inline="javascript">
+											var datas = [[${@dict.getType('sys_normal_disable')}]];
+											// alert(datas[0].dictValue);
+									    </script>
+                                    </p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('Thymeleaf模板片段')" />
+</head>
+<body class="gray-bg">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thymeleaf模板片段</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#dyyyymbpd">1、定义与引用模板片段</a>
+                                    </h4>
+                                </div>
+                                <div id="dyyyymbpd" class="panel-collapse collapse in" th:with="year=2019">
+                                    <div class="panel-body" th:with="result=true">
+                                        <p class="text-danger">定义与引用模板片段（~{模板名称::选择器}）</p>
+                                        th:insert ：  保留自己的主标签，保留th:fragment的主标签。
+                                        <div th:insert="~{fragment/footer.html :: copy}"></div>
+                                        th:replace ：不要自己的主标签，保留th:fragment的主标签。
+                                        <div th:replace="~{fragment/footer.html :: copy}"></div>
+                                        th:include ：保留自己的主标签，不要th:fragment的主标签。
+                                        <div th:include="~{fragment/footer.html :: copy}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#xzqdjcyf">2、选择器的基础语法</a>
+                                    </h4>
+                                </div>
+                                <div id="xzqdjcyf" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        1、选择直接子节点id为footerA的div
+                                        <p class="text-left"><div th:insert="~{fragment/select.html :: /div[@id='footerA']}"></div></p>
+                                        2、选择全部子节点中id为footerB的div
+                                        <p class="text-left"><div th:insert="~{fragment/select.html :: //div[@id='footerB']}"></div></p>
+                                        3、选择class为content的span节点
+                                        <p class="text-left"><div th:insert="~{fragment/select.html :: span[@class='content']}"></div></p>
+                                        4、选择class为footerG的span（有多个），选出第一个
+                                        <p class="text-left"><div th:insert="~{fragment/select.html :: //span[@class='footerG'][0]}"></div></p>
+                                        5、选择class为footerContent并且id为footerE的span（多级筛选）
+                                        <p class="text-left"><div th:insert="~{fragment/select.html :: //div[@class='footerContent']//span[@id='footerE']}"></div></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#hybldpdyy">3、含有变量的的片段引用</a>
+                                    </h4>
+                                </div>
+                                <div id="hybldpdyy" class="panel-collapse collapse">
+                                    <div class="panel-body" th:with="userName='张三',deptName='技术部'">
+                                        1、使用常量传参
+                                        <div th:replace="~{fragment/param.html :: welcome('张三','技术部')}"></div>
+                                        2、使用变量传参
+                                        <div th:replace="~{fragment/param.html :: welcome(${userName},${deptName})}"></div>
+                                        3、不传入参数情况（不会出现异常）
+                                        <div th:replace="~{fragment/param.html :: welcome_1}"></div>
+                                        4、不显示指定片段参数 
+                                        <div th:replace="~{fragment/param.html :: welcome_1(val1='张三', val2='技术部')}"></div>
+                                        5、片断块引用
+                                        <table class="table">
+										    <thead>
+										    <tr>
+										        <th>用户ID</th>
+										        <th>用户名</th>
+										    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#scmb">4、删除模板</a>
+                                    </h4>
+                                </div>
+                                <div id="scmb" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        1、普通方法
+                                        <p class="text-left"><div th:if="false">我是当前节点<div>我是子节点</div></div></p>
+										2、remove删除方法（all删除包含标签和所有的子节点）
+										<table class="table">
+										    <thead>
+											    <tr th:remove="all">
+											        <th>用户ID</th>
+											        <th>用户名</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+										3、remove删除方法（body不包含标记删除,但删除其所有的子节点）
+										<table class="table">
+										    <thead>
+											    <tr th:remove="body">
+											        <th>用户ID</th>
+											        <th>用户名</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+										4、remove删除方法（tag包含标记的删除,但不删除它的子节点）
+										<table class="table">
+										    <thead>
+											    <tr th:remove="tag">
+											        <th>用户ID</th>
+											        <th>用户名</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+										5、all-but-first（删除所有包含标签的孩子，除了第一个）
+										<table class="table">
+										    <thead>
+											    <tr th:remove="all-but-first">
+											        <th>用户ID</th>
+											        <th>用户名</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+										6、none（什么也不做）
+										<table class="table">
+										    <thead>
+											    <tr th:remove="none">
+											        <th>用户ID</th>
+											        <th>用户名</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+										    	<th:block th:each="user : ${users}">
+											    <tr>
+											        <td th:text="${user.userId}"></td>
+											        <td th:text="${user.userName}"></td>
+											    </tr>
+										   		</th:block>
+										    </tbody>
+										</table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#mbzs">5、模板注释</a>
+                                    </h4>
+                                </div>
+                                <div id="mbzs" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        1、注释可见
+                                        <!-- 你看的见我 -->
+                                        2、注释不可见
+                                        <!--/* 你看不见我 */-->
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+</body>
+</html>

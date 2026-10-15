@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tool.employee.mapper.EmployeeMapper">
+    
+    <resultMap type="Employee" id="EmployeeResult">
+        <result property="employeeId"    column="employee_id"    />
+        <result property="employeeCode"    column="employee_code"    />
+        <result property="employeeName"    column="employee_name"    />
+        <result property="employeeSex"    column="employee_sex"    />
+        <result property="employeePhone"    column="employee_phone"    />
+        <result property="employeeEmail"    column="employee_email"    />
+        <result property="employeeBalance"    column="employee_balance"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectEmployeeVo">
+        select employee_id, employee_code, employee_name, employee_sex, employee_phone, employee_email, employee_balance, status, create_by, create_time, update_by, update_time, remark from sys_employee
+    </sql>
+	
+    <select id="selectEmployeeList" parameterType="Employee" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        <where>  
+            <if test="employeeId != null "> and employee_id = #{employeeId}</if>
+             <if test="employeeCode != null  and employeeCode != '' "> and employee_code = #{employeeCode}</if>
+             <if test="employeeName != null  and employeeName != '' "> and employee_name = #{employeeName}</if>
+             <if test="employeeSex != null  and employeeSex != '' "> and employee_sex = #{employeeSex}</if>
+             <if test="employeePhone != null  and employeePhone != '' "> and employee_phone = #{employeePhone}</if>
+             <if test="employeeEmail != null  and employeeEmail != '' "> and employee_email = #{employeeEmail}</if>
+             <if test="employeeBalance != null "> and employee_balance = #{employeeBalance}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        where employee_id = #{employeeId}
+    </select>
+        
+    <insert id="insertEmployee" parameterType="Employee" useGeneratedKeys="true" keyProperty="employeeId">
+        insert into sys_employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="employeeCode != null  and employeeCode != ''  ">employee_code,</if>
+			<if test="employeeName != null  and employeeName != ''  ">employee_name,</if>
+			<if test="employeeSex != null  and employeeSex != ''  ">employee_sex,</if>
+			<if test="employeePhone != null  and employeePhone != ''  ">employee_phone,</if>
+			<if test="employeeEmail != null  and employeeEmail != ''  ">employee_email,</if>
+			<if test="employeeBalance != null  ">employee_balance,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="employeeCode != null  and employeeCode != ''  ">#{employeeCode},</if>
+			<if test="employeeName != null  and employeeName != ''  ">#{employeeName},</if>
+			<if test="employeeSex != null  and employeeSex != ''  ">#{employeeSex},</if>
+			<if test="employeePhone != null  and employeePhone != ''  ">#{employeePhone},</if>
+			<if test="employeeEmail != null  and employeeEmail != ''  ">#{employeeEmail},</if>
+			<if test="employeeBalance != null  ">#{employeeBalance},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateEmployee" parameterType="Employee">
+        update sys_employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="employeeCode != null  and employeeCode != ''  ">employee_code = #{employeeCode},</if>
+            <if test="employeeName != null  and employeeName != ''  ">employee_name = #{employeeName},</if>
+            <if test="employeeSex != null  and employeeSex != ''  ">employee_sex = #{employeeSex},</if>
+            <if test="employeePhone != null  and employeePhone != ''  ">employee_phone = #{employeePhone},</if>
+            <if test="employeeEmail != null  and employeeEmail != ''  ">employee_email = #{employeeEmail},</if>
+            <if test="employeeBalance != null  ">employee_balance = #{employeeBalance},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+            <if test="createBy != null  and createBy != ''  ">create_by = #{createBy},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where employee_id = #{employeeId}
+    </update>
+
+	<delete id="deleteEmployeeById" parameterType="Long">
+        delete from sys_employee where employee_id = #{employeeId}
+    </delete>
+	
+    <delete id="deleteEmployeeByIds" parameterType="String">
+        delete from sys_employee where employee_id in 
+        <foreach item="employeeId" collection="array" open="(" separator="," close=")">
+            #{employeeId}
+        </foreach>
+    </delete>
+    
+</mapper>
